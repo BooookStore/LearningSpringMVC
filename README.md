@@ -7,4 +7,4 @@ Spring MVC を学ぶ過程で作成したウェブアプリケーションです
 ## Referenced
 本ウェブアプリケーションの作成には以下を参考にしています。
 
-- [Spring MVC: Beginner's Guide - Second Edition]()
+- [Spring MVC: Beginner's Guide - Second Edition](https://www.packtpub.com/application-development/spring-mvc-beginners-guide-second-edition)
