@@ -36,7 +36,8 @@ import org.springframework.web.servlet.view.JstlView;
 @EnableWebMvc
 
 /*
- * 
+ * Controller,services,repositoryなどを、自動抽出する。
+ * base-packageプロパティに指定したパッケージ配下が対象。 
  */
 @ComponentScan("com.packt.webstore")
 public class WebApplicationContextConfig extends WebMvcConfigurerAdapter {
