@@ -10,13 +10,17 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
  */
 public class DispatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
+	/**
+	 * アプリケーションコンテキストを設定
+	 * @return
+	 */
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return null;
+		return new Class[] { RootApplicationConfig.class };
 	}
 
 	/**
-	 * ディスパッチャーサーブレットのアプリケーションコンテキストを設定。
+	 * ディスパッチャーサーブレットのアプリケーションコンテキストを設定
 	 * 
 	 * ディスパッチャーサーブレットに対して設定クラスを設定し、
 	 * コントローラークラスとviewファイルを設定する。
