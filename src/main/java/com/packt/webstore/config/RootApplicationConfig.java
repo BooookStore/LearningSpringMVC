@@ -21,7 +21,6 @@ public class RootApplicationConfig {
 	 */
 	@Bean
 	public DataSource dataSource() {
-		System.out.println("CALL DATASOURCE");
 		EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
 		EmbeddedDatabase db = builder.setType(EmbeddedDatabaseType.HSQL)
 				.addScript("db/sql/create-table.sql")
