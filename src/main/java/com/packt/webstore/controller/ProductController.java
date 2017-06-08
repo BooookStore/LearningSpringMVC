@@ -12,14 +12,11 @@ import com.packt.webstore.service.ProductService;
 public class ProductController {
 
 	@Autowired
-	private ProductRepository productRepository;
-
-	@Autowired
 	private ProductService productService;
 
 	@RequestMapping("/products")
 	public String list(Model model) {
-		model.addAttribute("products", productRepository.getAllProducts());
+		model.addAttribute("products", productService.getAllProducts());
 		return "products";
 	}
 
