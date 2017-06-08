@@ -55,6 +55,7 @@ public class InMemoryProductRepository implements ProductRepository {
 
 		// SQLのプレースホルダーの値を決定するマップを作成
 		Map<String, Object> param = new HashMap<>();
+		param.put("unitsInStock", noOfUnits);
 		param.put("id", productId);
 
 		// 更新処理
