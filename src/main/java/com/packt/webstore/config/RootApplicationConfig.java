@@ -10,6 +10,12 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
+/**
+ * アプリケーションのルートコンテキスト
+ * 
+ * @author bookstore
+ *
+ */
 @Configuration
 @ComponentScan("com.packt.webstore")
 public class RootApplicationConfig {
