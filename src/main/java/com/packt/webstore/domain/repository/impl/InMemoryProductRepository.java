@@ -40,6 +40,22 @@ public class InMemoryProductRepository implements ProductRepository {
 	}
 
 	/**
+	 * categoryで指定されたカテゴリーの商品情報を取得する。
+	 * 
+	 * @param category
+	 * @return 商品情報
+	 */
+	@Override
+	public List<Product> getProductByCategory(String category) {
+		String sql = "SELECT * FROM products WHERE category = :category";
+
+		HashMap<String, Object> param = new HashMap<String, Object>();
+		param.put("category", category);
+
+		return jdbcTemplate.query(sql, param, new ProductMapper());
+	}
+
+	/**
 	 * productIdで指定された商品情報のストック数をnoOfUnitsで書き換える。
 	 * 
 	 * @param productId
@@ -62,6 +78,32 @@ public class InMemoryProductRepository implements ProductRepository {
 		jdbcTemplate.update(SQL, param);
 	}
 
+	/**
+	 * 商品情報をfilterParamsで指定された内容でフィルタリングし、商品情報を取得する。
+	 * 
+	 * @param filterParams
+	 * @return
+	 */
+	@Override
+	public List<Product> getProductsByFilter(Map<String, List<String>> filterParams) {
+		String sql = "SELECT * FROM products WHERE category IN ( :categories ) AND MANUFACTURER IN ( :brands )";
+		return jdbcTemplate.query(sql, filterParams, new ProductMapper());
+	}
+
+	/**
+	 * productIdで指定された商品情報を取得する。
+	 * 
+	 * @param productId
+	 * @return
+	 */
+	@Override
+	public Product getProductById(String productId) {
+		String sql = "SELECT * FROM products WHERE id = :id";
+		HashMap<String, Object> param = new HashMap<String, Object>();
+		param.put("id", productId);
+		return jdbcTemplate.queryForObject(sql, param, new ProductMapper());
+	}
+
 	private static final class ProductMapper implements RowMapper<Product> {
 
 		@Override
@@ -79,6 +121,46 @@ public class InMemoryProductRepository implements ProductRepository {
 			product.setDiscountinued(rs.getBoolean("DISCOUNTINUED"));
 			return product;
 		}
+
+	}
+
+	/**
+	 * 商品情報を追加する。
+	 * 
+	 * @param product
+	 */
+	@Override
+	public void addProduct(Product product) {
+
+		// SQL文を用意
+		String sql = "INSERT INTO PRODUCTS (ID, "
+				+ "NAME,"
+				+ "DESCRIPTION,"
+				+ "UNIT_PRICE,"
+				+ "MANUFACTURER,"
+				+ "CATEGORY,"
+				+ "CONDITION,"
+				+ "UNITS_IN_STOCK,"
+				+ "UNITS_IN_ORDER,"
+				+ "DISCOUNTINUED) "
+				+ "VALUES (:id, :name, :desc, :price, :manufacture, :category, :condition, :inStock,"
+				+ " :inOrder, :discountinued)";
+
+		// プレースホルダーの内容を用意
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("id", product.getProductId());
+		param.put("name", product.getName());
+		param.put("desc", product.getDescription());
+		param.put("price", product.getUnitPrice());
+		param.put("manufacture", product.getManufacturer());
+		param.put("category", product.getCategory());
+		param.put("condition", product.getCondition());
+		param.put("inStock", product.getUnitsInStock());
+		param.put("inOrder", product.getUnitsInOrder());
+		param.put("discountinued", product.isDiscountinued());
+
+		// 内容を更新
+		jdbcTemplate.update(sql, param);
 
 	}
 
