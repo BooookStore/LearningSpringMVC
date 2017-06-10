@@ -1,9 +1,12 @@
 package com.packt.webstore.controller;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -148,5 +151,12 @@ public class ProductController {
 				"category",
 				"unitsInStock",
 				"condition");
+
+		// WebDateは、HTTPパラメータ変数を java.beans.PropertyEditor を使用して
+		// ターゲットとなる型に変換できる。
+		// 以下はDateクラスに変換する例
+		SimpleDateFormat dateFormat = new SimpleDateFormat("MMM d, YYYY");
+		CustomDateEditor orderDateEditor = new CustomDateEditor(dateFormat, true);
+		webDataBinder.registerCustomEditor(Date.class, orderDateEditor);
 	}
 }
