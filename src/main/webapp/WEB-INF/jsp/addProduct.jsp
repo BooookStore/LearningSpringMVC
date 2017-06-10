@@ -74,14 +74,6 @@
 					</div>
 				</div>
 
-				<!-- unitsInOrder -->
-				<div class="form-group">
-					<label class="control-label col-lg-2 col-lg-2" for="unitsInOrder">Units In Order</label>
-					<div class="col-lg-10">
-						<form:input id="unitsInOrder" path="unitsInOrder" type="text" class="form:input-large" />
-					</div>
-				</div>
-
 				<!-- description -->
 				<div class="form-group">
 					<label class="control-label col-lg-2" for="description">Description</label>
@@ -90,21 +82,13 @@
 					</div>
 				</div>
 
-				<!-- Discountinued -->
-				<div class="form-group">
-					<label class="control-label col-lg-2" for="discountinued">Discountinued</label>
-					<div class="col-lg-10">
-						<form:checkbox id="discountinued" path="discountinued" />
-					</div>
-				</div>
-
 				<!-- Condition -->
 				<div class="form-group">
 					<label class="control-label col-lg-2" for="condition">Condition</label>
 					<div class="col-lg-10">
-						<form:checkbox id="condition" path="discountinued" />New
-						<form:checkbox id="condition" path="discountinued" />Old
-						<form:checkbox id="condition" path="discountinued" />Refurbished
+						<form:checkbox path="condition" value="New" />New
+						<form:checkbox path="condition" value="Old" />Old
+						<form:checkbox path="condition" value="Refurbished" />Refurbished
 					</div>
 				</div>
 				

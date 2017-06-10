@@ -6,6 +6,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.MatrixVariable;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -109,8 +113,40 @@ public class ProductController {
 	 * @return
 	 */
 	@RequestMapping(value = "/products/add", method = RequestMethod.POST)
-	public String proccessAddNewProduct(@ModelAttribute("newProduct") Product product) {
+	public String proccessAddNewProduct(@ModelAttribute("newProduct") Product product, BindingResult result) {
+
+		// 許可されていないデータがバインドされていた場合、例外を発生させる。
+		String[] suppressedFields = result.getSuppressedFields();
+		if (suppressedFields.length > 0) {
+			throw new RuntimeException("Attempting to bind desallowed fields: " +
+					StringUtils.arrayToCommaDelimitedString(suppressedFields));
+		}
+
+		// 商品情報を追加
 		productService.addProduct(product);
+
 		return "redirect:/market/products";
+	}
+
+	/**
+	 * WebDataBinderにより、バインドするデータの設定を行う。
+	 * 
+	 * @param webDataBinder
+	 */
+	@InitBinder
+	public void initBinder(WebDataBinder webDataBinder) {
+
+		// 列挙したパラメータ変数のバインドを許可する
+		// 許可されていないパラメータ変数がリクエストパラメータとして送信されてきた場合は
+		// BindingResultに詳細データをセットする
+		// NOTE : setDisallowedFieldsメソッドを使用して、許可しない変数を列挙することもできる
+		webDataBinder.setAllowedFields("productId",
+				"name",
+				"unitPrice",
+				"description",
+				"manufacturer",
+				"category",
+				"unitsInStock",
+				"condition");
 	}
 }
