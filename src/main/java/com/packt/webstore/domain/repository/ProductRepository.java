@@ -47,6 +47,14 @@ public interface ProductRepository {
 	List<Product> getProductsByFilter(Map<String, List<String>> filterParams);
 
 	/**
+	 * カテゴリーがTabletとなっている商品を、filterParamsに基づいてフィルタリングし、商品情報を取得する。
+	 * 
+	 * @param filterParams
+	 * @return
+	 */
+	List<Product> getTabletByFilter(Map<String, List<String>> filterParams,String brand);
+
+	/**
 	 * productIdで指定された商品情報を取得する。
 	 * 
 	 * @param productId

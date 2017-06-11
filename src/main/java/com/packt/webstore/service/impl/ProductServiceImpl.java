@@ -86,4 +86,15 @@ public class ProductServiceImpl implements ProductService {
 		productRepository.addProduct(product);
 	}
 
+	/**
+	 * カテゴリーがTabletとなっている商品を、filterParamsに基づいてフィルタリングし、商品情報を取得する。
+	 * 
+	 * @param filterParams
+	 * @return
+	 */
+	@Override
+	public List<Product> getTabletByFilter(Map<String, List<String>> filterParams, String brand) {
+		return productRepository.getTabletByFilter(filterParams, brand);
+	}
+
 }

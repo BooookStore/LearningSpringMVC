@@ -84,6 +84,31 @@ public class ProductController {
 	}
 
 	/**
+	 * Tabletの情報をフィルタリングし、表示します。
+	 * 
+	 * フィルタリング内容 low : 最低価格 high : 最高価格 brand : ブランド名
+	 * 
+	 * @param filterParams
+	 * @return
+	 */
+	@RequestMapping("/products/{category}/price/{params}")
+	public String filterProduct(@PathVariable String category,
+			@MatrixVariable(pathVar = "params") Map<String, List<String>> filterParams,
+			@RequestParam("brand") String brand,
+			Model model) {
+
+		System.out.println(category);
+		
+		filterParams.entrySet().stream().forEach(e -> {
+			System.out.println(e.getKey() + ":" + e.getValue());
+		});
+		
+		model.addAttribute("products", productService.getTabletByFilter(filterParams, brand));
+
+		return "products";
+	}
+
+	/**
 	 * productId で指定された商品情報の購入画面を表示します。
 	 * 
 	 * @param productId

@@ -49,7 +49,16 @@ public interface ProductService {
 
 	/**
 	 * 商品情報を追加する
+	 * 
 	 * @param product
 	 */
 	void addProduct(Product product);
+
+	/**
+	 * カテゴリーがTabletとなっている商品を、filterParamsに基づいてフィルタリングし、商品情報を取得する。
+	 * 
+	 * @param filterParams
+	 * @return
+	 */
+	List<Product> getTabletByFilter(Map<String, List<String>> filterParams, String brand);
 }
