@@ -60,5 +60,5 @@ public interface ProductService {
 	 * @param filterParams
 	 * @return
 	 */
-	List<Product> getTabletByFilter(Map<String, List<String>> filterParams, String brand);
+	List<Product> getTabletByFilter(Map<String, List<String>> filterParams,String category, String brand);
 }

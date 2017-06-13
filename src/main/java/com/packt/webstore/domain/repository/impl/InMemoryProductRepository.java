@@ -165,21 +165,19 @@ public class InMemoryProductRepository implements ProductRepository {
 	}
 
 	/**
-	 * カテゴリーがTabletとなっている商品を、filterParamsに基づいてフィルタリングし、商品情報を取得する。
-	 * 
-	 * @param filterParams
-	 * @return
+	 * 最高価格、最低価格、カテゴリ名、ブランド名でフィルタリングし、結果を返す。
 	 */
 	@Override
-	public List<Product> getTabletByFilter(Map<String, List<String>> filterParams, String brand) {
-		String sql = "SELECT * FROM products WHERE category = 'Tablet' "
+	public List<Product> getTabletByFilter(Map<String, List<String>> filterParams, String category, String brand) {
+		String sql = "SELECT * FROM products WHERE category = :category "
 				+ "AND manufacturer = :brand AND unit_price BETWEEN :low AND :high";
 
 		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("category", category);
 		params.put("low", filterParams.get("low"));
 		params.put("high", filterParams.get("high"));
 		params.put("brand", brand);
-		
+
 		return jdbcTemplate.query(sql, params, new ProductMapper());
 	}
 

@@ -52,7 +52,7 @@ public interface ProductRepository {
 	 * @param filterParams
 	 * @return
 	 */
-	List<Product> getTabletByFilter(Map<String, List<String>> filterParams,String brand);
+	List<Product> getTabletByFilter(Map<String, List<String>> filterParams,String category,String brand);
 
 	/**
 	 * productIdで指定された商品情報を取得する。

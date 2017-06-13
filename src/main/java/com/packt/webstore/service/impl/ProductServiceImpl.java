@@ -93,8 +93,8 @@ public class ProductServiceImpl implements ProductService {
 	 * @return
 	 */
 	@Override
-	public List<Product> getTabletByFilter(Map<String, List<String>> filterParams, String brand) {
-		return productRepository.getTabletByFilter(filterParams, brand);
+	public List<Product> getTabletByFilter(Map<String, List<String>> filterParams, String category, String brand) {
+		return productRepository.getTabletByFilter(filterParams, category, brand);
 	}
 
 }

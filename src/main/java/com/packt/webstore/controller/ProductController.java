@@ -98,12 +98,12 @@ public class ProductController {
 			Model model) {
 
 		System.out.println(category);
-		
+
 		filterParams.entrySet().stream().forEach(e -> {
 			System.out.println(e.getKey() + ":" + e.getValue());
 		});
-		
-		model.addAttribute("products", productService.getTabletByFilter(filterParams, brand));
+
+		model.addAttribute("products", productService.getTabletByFilter(filterParams, category, brand));
 
 		return "products";
 	}
