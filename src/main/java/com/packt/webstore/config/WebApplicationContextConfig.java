@@ -50,7 +50,20 @@ public class WebApplicationContextConfig extends WebMvcConfigurerAdapter {
 	}
 
 	/**
-	 * 静的ファイルをURL指定で取得できるように設定
+	 * ハンドラマッピングのパスマッチングオプションを設定します。
+	 */
+	@Override
+	public void configurePathMatch(PathMatchConfigurer configurer) {
+	
+		// マトリックス変数のサポートを有効化
+		UrlPathHelper urlPathHelper = new UrlPathHelper();
+		urlPathHelper.setRemoveSemicolonContent(false);
+	
+		configurer.setUrlPathHelper(urlPathHelper);
+	}
+
+	/**
+	 * 静的ファイルをURL指定で取得できるように設定します。
 	 */
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -58,6 +71,8 @@ public class WebApplicationContextConfig extends WebMvcConfigurerAdapter {
 	}
 
 	/**
+	 * 
+	 * 
 	 * NOTE : Spring MVC が正常に動作する最低限の Bean が、ViewResolverを実装すること。
 	 * 
 	 * @return
@@ -68,22 +83,12 @@ public class WebApplicationContextConfig extends WebMvcConfigurerAdapter {
 		resolver.setViewClass(JstlView.class);
 		resolver.setPrefix("/WEB-INF/jsp/");
 		resolver.setSuffix(".jsp");
-
+	
 		return resolver;
 	}
 
-	@Override
-	public void configurePathMatch(PathMatchConfigurer configurer) {
-
-		// マトリックス変数のサポートを有効化
-		UrlPathHelper urlPathHelper = new UrlPathHelper();
-		urlPathHelper.setRemoveSemicolonContent(false);
-
-		configurer.setUrlPathHelper(urlPathHelper);
-	}
-
 	/**
-	 * JSPで使用される文字列を外部ファイルにまとめるための設定。 message.propertiesファイルから文字列を取得するよう、設定している。
+	 * JSPで使用される文字列を外部ファイルにまとめるための設定です。 message.propertiesファイルから文字列を取得するよう、設定しています。
 	 * 
 	 * @return
 	 */
