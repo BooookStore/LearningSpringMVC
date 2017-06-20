@@ -3,6 +3,8 @@ package com.packt.webstore.domain;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Data;
 
 @Data
@@ -29,6 +31,8 @@ public class Product implements Serializable {
 	private boolean discountinued;
 
 	private String condition;
+	
+	private MultipartFile productImage;
 
 	public Product() {
 		super();

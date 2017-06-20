@@ -19,6 +19,9 @@
 
 	<section class="container">
 		<div class="row">
+		<div class="col-md-5">
+			<img src="<c:url value="/img/${product.productId}.jpg"></c:url>" alt="image" style="width:100%" />
+		</div>
 			<div class="col-md-5">
 				<h3>${product.name}</h3>
 				<p>${product.description}</p>
@@ -37,8 +40,8 @@
 				<h4>${product.unitPrice}USD</h4>
 				<p>
 					<a href="#" class="btn btn-warning btn-large"><span class="glyphicon-shopping-cart glypicon"></span> Order Now
-					</a>
-					<a href=" <spring:url value="/market/products" /> " class="btn btn-default"><span class="glyphicon-hand-left glyphicon"></span>Back</a>
+					</a> <a href=" <spring:url value="/market/products" /> " class="btn btn-default"><span
+						class="glyphicon-hand-left glyphicon"></span>Back</a>
 				</p>
 			</div>
 		</div>

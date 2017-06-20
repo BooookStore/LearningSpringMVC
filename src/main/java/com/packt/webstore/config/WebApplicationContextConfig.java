@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
@@ -54,11 +55,11 @@ public class WebApplicationContextConfig extends WebMvcConfigurerAdapter {
 	 */
 	@Override
 	public void configurePathMatch(PathMatchConfigurer configurer) {
-	
+
 		// マトリックス変数のサポートを有効化
 		UrlPathHelper urlPathHelper = new UrlPathHelper();
 		urlPathHelper.setRemoveSemicolonContent(false);
-	
+
 		configurer.setUrlPathHelper(urlPathHelper);
 	}
 
@@ -71,8 +72,6 @@ public class WebApplicationContextConfig extends WebMvcConfigurerAdapter {
 	}
 
 	/**
-	 * 
-	 * 
 	 * NOTE : Spring MVC が正常に動作する最低限の Bean が、ViewResolverを実装すること。
 	 * 
 	 * @return
@@ -83,12 +82,25 @@ public class WebApplicationContextConfig extends WebMvcConfigurerAdapter {
 		resolver.setViewClass(JstlView.class);
 		resolver.setPrefix("/WEB-INF/jsp/");
 		resolver.setSuffix(".jsp");
-	
+
 		return resolver;
 	}
 
 	/**
-	 * JSPで使用される文字列を外部ファイルにまとめるための設定です。 message.propertiesファイルから文字列を取得するよう、設定しています。
+	 * リクエスト内にマルチパートコンテンツが存在するかどうかを決定し、マルチパートファイルとパラメーターをパースする。
+	 * 
+	 * @return
+	 */
+	@Bean
+	public CommonsMultipartResolver multipartResolver() {
+		CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+		resolver.setDefaultEncoding("UTF-8");
+		return resolver;
+	}
+
+	/**
+	 * JSPで使用される文字列を外部ファイルにまとめるための設定です。
+	 * message.propertiesファイルから文字列を取得するよう、設定しています。
 	 * 
 	 * @return
 	 */

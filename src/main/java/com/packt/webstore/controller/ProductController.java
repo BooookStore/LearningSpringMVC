@@ -1,9 +1,12 @@
 package com.packt.webstore.controller;
 
+import java.io.File;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.packt.webstore.domain.Product;
 import com.packt.webstore.service.ProductService;
@@ -141,7 +145,21 @@ public class ProductController {
 	 * @return
 	 */
 	@RequestMapping(value = "/products/add", method = RequestMethod.POST)
-	public String proccessAddNewProduct(@ModelAttribute("newProduct") Product product, BindingResult result) {
+	public String proccessAddNewProduct(@ModelAttribute("newProduct") Product product, BindingResult result,
+			HttpServletRequest request) {
+
+		// マルチパートより、画像データを保存
+		// JPEGファイルのみに対応
+		MultipartFile productImage = product.getProductImage();
+		String rootDirectory = request.getServletContext().getRealPath("/");
+		if (productImage != null && !productImage.isEmpty()) {
+			try {
+				productImage
+						.transferTo(new File(rootDirectory + "resources/images/" + product.getProductId() + ".jpg"));
+			} catch (Exception e) {
+				throw new RuntimeException("Product Image saving faild!", e);
+			}
+		}
 
 		// 許可されていないデータがバインドされていた場合、例外を発生させる。
 		String[] suppressedFields = result.getSuppressedFields();
@@ -175,7 +193,8 @@ public class ProductController {
 				"manufacturer",
 				"category",
 				"unitsInStock",
-				"condition");
+				"condition",
+				"productImage");
 
 		// WebDateは、HTTPパラメータ変数を java.beans.PropertyEditor を使用して
 		// ターゲットとなる型に変換できる。
