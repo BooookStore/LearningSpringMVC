@@ -1,1 +1,9 @@
 /target/
+
+# idea
+/.idea/
+*.iml
+
+# Eclipse
+.classpath
+.project
